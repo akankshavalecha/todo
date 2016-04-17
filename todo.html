@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,400' rel='stylesheet' type='text/css'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+
+	<style type="text/css" media="screen">
+		body{
+			font-family: "Lato",sans-serif;
+			margin: 0;
+			padding: 0 20px;
+		}	
+		.page-header{margin-bottom: 0 !important;}
+		.main-section{
+			height: 800px;
+		}
+		.row .cols{
+			padding: 30px;
+
+		}
+		.font24{font-size: 24px;}
+		.bg-muted{
+			background-color: #f5f5f5;
+			height: 400px;
+			border: 2px solid #ddd;}
+			.list-group-item {
+				border: none;
+				padding: 15px !important;
+				border-radius: 50% !important;
+				display: table-cell;
+				cursor: pointer;
+			}
+			.list-group-item-primary, .bgblue{
+				background-color: #1A74BC;
+				color: white;
+			}.list-group-item-success, .bggreen{
+				background-color: #00BB63;
+				color: white;
+			}.list-group-item-danger, .bgred{
+				background-color: #E7363B;
+				color: white;
+			}.list-group-item-info, .bgteal{
+				background-color: #31708f;
+				color: white;
+			}
+			.list-group-item-orange, .bgorange{
+				background-color: #F47E00;
+				color: white;
+			}.list-group-item-yellow, .bgyellow{
+				background-color: #FEA000;
+				color: white;
+			}.list-group-item-gray, .bggray{
+				background-color: rgb(207, 216, 220);
+				color: white;
+			}.list-group-item-white, .bgwhite{
+				background-color: #fff;
+				color: #1A74BC;
+				border: 1px solid #ddd;
+			}
+			.bgwhite{color: #1A74BC;background-color: #fff;}
+			.colortabs{
+				margin: 5px;
+			}
+
+		</style>
+	</head>
+	<body ng-app="todo">
+		<header class="page-header text-center">
+			<h1 class="text-primary">My To-Do App <span class="glyphicon glyphicon-pencil"></span><span class="glyphicon glyphicon-plus"></span></h1>
+		</header>
+		<section class="main-section" ng-controller="todoController">
+			<div class="row">
+				<div class="col-xs-12 col-md-8 cols">
+					<div class="row">
+						<div class="col-md-2">
+							<span class="font24 text-primary">To-do</span>
+						</div>
+						<div class="col-md-10">
+							<div class="input-group">
+								<input type="text" name="task" value="" placeholder="Add a task to do" class="form-control {{ inputcolor }}" ng-model="task">
+								<span class="input-group-btn">
+									<button class="btn btn-default text-primary" type="button" ng-click="addTodo(task)"><i class="glyphicon glyphicon-plus"></i></button>
+								</span>
+							</div>
+							<div class="colortabs">
+								<ul class="list-group">
+									<li class="list-group-item list-group-item-primary" title="Blue" ng-click="inputcolor = 'bgblue'"></li>
+									<li class="list-group-item list-group-item-success" title="Green" ng-click="inputcolor = 'bggreen'"></li>
+									<li class="list-group-item list-group-item-info" title="Teal" ng-click="inputcolor = 'bgteal'"></li>
+									<li class="list-group-item list-group-item-orange" title="Orange" ng-click="inputcolor = 'bgorange'"></li>
+									<li class="list-group-item list-group-item-danger" title="Red" ng-click="inputcolor = 'bgred'"></li>
+									<li class="list-group-item list-group-item-gray" title="Gray" ng-click="inputcolor = 'bggray'" ></li>
+									<li class="list-group-item list-group-item-white" title="White" ng-click="inputcolor = 'bgwhite'"></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-xs-12" ng-repeat="todo in todoList">
+							<div class="panel {{ todo.card }}">
+								<div class="panel-body">
+									{{ todo.text }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-md-4 bg-muted cols">
+					
+				</div>
+			</div>
+		</section>
+		
+
+		<script>
+			angular.module('todo', [])
+			.controller('todoController', function($scope) {
+				$scope.task = '';
+				$scope.inputcolor = 'bgwhite';
+				$scope.todoList = [
+				{text:'learn angular', done:true, card: 'bgwhite'},
+				{text:'build an angular app', done:false, card: 'bgwhite'},
+				{text:'work', done:true, card: 'bgorange'},
+				{text:'gym', done:false, card: 'bggreen'},
+				];
+
+				$scope.addTodo = function() {
+					if($scope.task.length){
+						$scope.todoList.push({text:$scope.task, done:false, card: $scope.inputcolor});
+						$scope.task = '';
+						$scope.inputcolor = 'bgwhite';
+					}
+				};
+
+				$scope.remaining = function() {
+					var count = 0;
+					angular.forEach($scope.todoList, function(todo) {
+						count += todo.done ? 0 : 1;
+					});
+					return count;
+				};
+
+				$scope.archive = function() {
+					var oldTodos = $scope.todos;
+					$scope.todos = [];
+					angular.forEach(oldTodos, function(todo) {
+						if (!todo.done) $scope.todos.push(todo);
+					});
+				};
+			});
+		</script>
+	</body>
+	</html>
