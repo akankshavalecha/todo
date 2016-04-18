@@ -106,8 +106,7 @@ app = angular.module('todo', ['ngDragDrop','toaster']);
 					  }
 					});
 					$scope.doneList = cleantodoList;
-
-					// console.log(ui.draggable[0].index)
+					// updating the localstorage
 					localStorage.setItem('todoList', angular.toJson($scope.todoList));
 					localStorage.setItem('doneList', angular.toJson($scope.doneList));
 					var type = '';
@@ -118,39 +117,7 @@ app = angular.module('todo', ['ngDragDrop','toaster']);
 					}else{ type = 'warning'; }
 			        toaster.pop(type, "To-Do", "A Task is dropped into "+ event.target.id);
         
-      			};
-      				$scope.notifyTodo = function(event,ui){
-					$scope.todoList.push($scope.reverseTodoItem);
-					var cleantodoList = [];
-					$.each($scope.todoList, function(ind, ele){
-					  if(!(jQuery.isEmptyObject(ele))){
-					    cleantodoList.push(ele);
-					  }
-					});
-					$scope.todoList = cleantodoList;
-					cleantodoList = [];
-					$.each($scope.doneList, function(ind, ele){
-					  if(!(jQuery.isEmptyObject(ele))){
-					    cleantodoList.push(ele);
-					  }
-					});
-					$scope.doneList = cleantodoList;
-
-					// console.log(ui.draggable[0].index)
-					localStorage.setItem('todoList', angular.toJson($scope.todoList));
-					localStorage.setItem('doneList', angular.toJson($scope.doneList));
-					var type = '';
-					if(event.target.id === 'TodoList'){
-						 type = 'error';
-					}else if(event.target.id === 'DoneList'){
-						 type = 'success';
-					}else{ type = 'warning'; }
-			        toaster.pop(type, "To-Do", "A Task is dropped into "+ event.target.id);
-        
-      			};
-
-
-
-				
+      	};
+      					
 
 			}]);
