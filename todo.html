@@ -20,8 +20,8 @@
 
 	</head>
 	<body ng-app="todo">
-		<header class="page-header text-center">
-			<h1 class="text-primary"> <small class="glyphicon glyphicon-pencil"></small> My To-Do App <small class="glyphicon glyphicon-pencil"></small></h1>
+		<header class="page-header">
+			<h1><img src="css/logo.svg" alt="Logo"> The To-Do App </h1>
 		</header>
 		<section class="main-section" ng-controller="todoController">
 			<div class="row">
@@ -51,7 +51,7 @@
 						</div>
 					</div>
 					<div class="row ">
-						<div id="TodoList" class="drag-list col-md-6 col-xs-12 btn-droppable" ng-repeat="todo in todoList track by $index" data-drop="true" ng-model='todoList' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=todoList])'}"  jqyoui-droppable="{index: {{$index}}, onDrop:'notify'}" ng-hide="!todo.text">
+						<div id="TodoList" class="drag-list col-md-6 col-xs-12 btn-droppable" ng-repeat="todo in todoList track by $index" data-drop="true" ng-model='todoList' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=todoList])'}"  jqyoui-droppable="{index: {{$index}}, onDrop:'notifyTodo'}" ng-hide="!todo.text">
 							<div class="panel {{ todo.card }} btn-draggable " data-drag="{{todo.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="todoList" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">
 								<div class="panel-body">
 									<span class="remove pull-right" ng-click="removeTodo(todoList, todo)" data-toggle="tooltip" title="Delete this todo"><i class="glyphicon glyphicon-remove" ></i></span>
