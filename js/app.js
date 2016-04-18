@@ -18,10 +18,13 @@ app = angular.module('todo', ['ngDragDrop','toaster']);
 				window.x = $scope;
 				$scope.task = '';
 				$scope.inputcolor = '';
+				$scope.editTodo = false;
 				$scope.doneListItem = {};
 				$scope.doneList = [];
 				var colorsClasses = ['bgblue','bggreen', 'bgred', 'bgteal', 
 									'bgorange', 'bgyellow', 'bggray', 'bgwhite']; 
+
+				// getting todolist from localstorage
 				var todoList = [
 				{text:'learn angular', done:true, card: 'bgwhite', 'drag': true},
 				{text:'build an angular app', done:false, card: 'bgwhite', 'drag': true},
@@ -31,6 +34,11 @@ app = angular.module('todo', ['ngDragDrop','toaster']);
 				$scope.saved = angular.fromJson(localStorage.getItem('todoList'));
 				$scope.todoList = (localStorage.getItem('todoList'))!==null ? $scope.saved : todoList;
 				localStorage.setItem('todoList', angular.toJson($scope.todoList));
+				// getting done list from local storage
+				var doneList = [];
+				$scope.savedDone = angular.fromJson(localStorage.getItem('doneList'));
+				$scope.doneList = (localStorage.getItem('doneList'))!==null ? $scope.savedDone : doneList;
+				localStorage.setItem('doneList', angular.toJson($scope.doneList));
 
 				$scope.addTodo = function() {
 					if($scope.task.length){
@@ -62,10 +70,35 @@ app = angular.module('todo', ['ngDragDrop','toaster']);
 					return count;
 				};
 
+				$scope.updateTodoList = function(){
+					var cleantodoList = [];
+					$.each($scope.todoList, function(ind, ele){
+					  if(!(jQuery.isEmptyObject(ele))){
+					    cleantodoList.push(ele);
+					  }
+					});
+					localStorage.setItem('todoList', angular.toJson($scope.todoList));
+					return;
+				}
 				
 
 				$scope.notify=function(event,ui){
 					$scope.doneList.push($scope.doneListItem);
+					var cleantodoList = [];
+					$.each($scope.todoList, function(ind, ele){
+					  if(!(jQuery.isEmptyObject(ele))){
+					    cleantodoList.push(ele);
+					  }
+					});
+					$scope.todoList = cleantodoList;
+					var cleantodoList = [];
+					$.each($scope.doneList, function(ind, ele){
+					  if(!(jQuery.isEmptyObject(ele))){
+					    cleantodoList.push(ele);
+					  }
+					});
+					$scope.doneList = cleantodoList;
+
 					// console.log(ui.draggable[0].index)
 					localStorage.setItem('todoList', angular.toJson($scope.todoList));
 					localStorage.setItem('doneList', angular.toJson($scope.doneList));
