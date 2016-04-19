@@ -73,5 +73,17 @@ body{
 .drag-list{min-height: 85px;}
 .drop-list{min-height: 550px;height: 100%;margin-top: 10px;}
 .help-block {
-	color: inherit;
+	color: inherit !important;
+}
+::-webkit-input-placeholder {
+    color: inherit !important;
+}
+:-moz-placeholder {
+    color: inherit !important;
+}
+::-moz-placeholder {
+    color: inherit !important;
+}
+:-ms-input-placeholder {
+    color: inherit !important;
 }
